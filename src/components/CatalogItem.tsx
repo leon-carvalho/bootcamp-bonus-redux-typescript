@@ -1,8 +1,9 @@
 import React, { useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import { IState } from "../store";
 import { IProduct } from "../store/modules/cart/types";
 import { addProductToCartRequest } from "../store/modules/cart/actions";
-import { useDispatch, useSelector } from "react-redux";
-import { IState } from "../store";
 
 interface CatalogItemProps {
   product: IProduct;
@@ -22,7 +23,7 @@ const CatalogItem: React.FC<CatalogItemProps> = ({ product }) => {
   return (
     <article>
       <strong>{product.title}</strong> {" - "}
-      <span>{product.price}</span> {"  "}
+      <span>{product.formattedPrice}</span>
       <button type="button" onClick={handleAddProductToCart}>
         Comprar
       </button>

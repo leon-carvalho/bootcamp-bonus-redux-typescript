@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import api from "../services/api";
+import { formatPrice } from "../utils/format";
 import { IProduct } from "../store/modules/cart/types";
 
 import CatalogItem from "./CatalogItem";
@@ -10,7 +11,14 @@ const Catalog: React.FC = () => {
 
   useEffect(() => {
     api.get("/products").then((response) => {
-      setCatalog(response.data);
+      if (response) {
+        const data = response.data.map((item: IProduct) => ({
+          ...item,
+          formattedPrice: formatPrice(item.price),
+        }));
+
+        setCatalog(data);
+      }
     });
   }, []);
 
@@ -18,9 +26,9 @@ const Catalog: React.FC = () => {
     <main>
       <h1>Catalog</h1>
 
-      {catalog.map((product) => (
-        <CatalogItem key={product.id} product={product} />
-      ))}
+      {catalog.map((product) => {
+        return <CatalogItem key={product.id} product={product} />;
+      })}
     </main>
   );
 };

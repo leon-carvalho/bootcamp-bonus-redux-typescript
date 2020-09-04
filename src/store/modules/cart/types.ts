@@ -8,6 +8,7 @@ export interface IProduct {
   id: number;
   title: string;
   price: number;
+  formattedPrice?: number;
 }
 
 export interface ICartItem {
